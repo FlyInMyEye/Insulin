@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="GPL-3.0-only"
+clientSideOnly=true
+[[mods]]
+modId="insulin"
+version="0.1.0"
+displayName="Insulin"
+authors="Fly"
+logoFile="logo.png"
+description='''Son, are you meshing your chunks again?'''
+[[dependencies.insulin]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.insulin]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.insulin]]
+modId="embeddium"
+mandatory=true
+versionRange="[0.3.31+mc1.20.1]"
+ordering="NONE"
+side="CLIENT"
+[[mixins]]
+config = "insulin.mixins.json"

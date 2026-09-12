@@ -1,0 +1,14 @@
+{
+  "gui.insulin.stats.cache": "Cache",
+  "gui.insulin.stats.disk_restore": "Disk restore",
+  "gui.insulin.stats.disk_hits": "Disk hits",
+  "gui.insulin.stats.invalidations": "Insulin invalidations",
+  "gui.insulin.stats.meshed": "Meshed",
+  "gui.insulin.stats.ram_cache": "RAM cache",
+  "gui.insulin.stats.ram_hits": "RAM hits",
+  "gui.insulin.stats.ram_restore": "RAM restore",
+  "gui.insulin.stats.ram_sections": "RAM sections",
+  "gui.insulin.stats.title": "Insulin mesh stats",
+  "message.insulin.stats.disabled": "Insulin stats disabled",
+  "message.insulin.stats.enabled": "Insulin stats enabled"
+}

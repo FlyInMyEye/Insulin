@@ -1,0 +1,29 @@
+{
+  "authors": [
+    "Fly"
+  ],
+  "depends": {
+    "fabric-api": "*",
+    "fabricloader": ">=0.19.1",
+    "java": ">=17",
+    "minecraft": "1.20.1",
+    "sodium": "=0.5.13+mc1.20.1"
+  },
+  "description": "Son, are you meshing your chunks again?",
+  "entrypoints": {
+    "client": [
+      "net.fly.insulin.InsulinFabric"
+    ]
+  },
+  "environment": "client",
+  "icon": "logo.png",
+  "id": "insulin",
+  "license": "GPL-3.0-only",
+  "mixins": [
+    "insulin.mixins.json",
+    "insulin.fabric.mixins.json"
+  ],
+  "name": "Insulin",
+  "schemaVersion": 1,
+  "version": "0.1.0"
+}

@@ -1,0 +1,157 @@
+plugins {
+    id 'base'
+}
+
+tasks.register('build_v1_20_1_fabric', Exec) {
+    workingDir file('versions/v1_20_1/fabric')
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine 'cmd', '/c', 'gradlew.bat', '--no-daemon', 'build'
+    } else {
+        commandLine './gradlew', '--no-daemon', 'build'
+    }
+    def resolvedJavaHome = providers.gradleProperty('java_21_home').orElse(providers.environmentVariable('JAVA21_HOME')).orElse(providers.environmentVariable('JAVA_HOME')).orNull
+    if (resolvedJavaHome != null && !resolvedJavaHome.toString().trim().isEmpty()) {
+        environment 'JAVA_HOME', resolvedJavaHome
+        if (!System.getProperty('os.name').toLowerCase().contains('windows')) {
+            environment 'PATH', "${resolvedJavaHome}/bin:${System.getenv('PATH')}"
+        }
+    }
+}
+
+tasks.register('build_v1_20_1_forge', Exec) {
+    workingDir file('versions/v1_20_1/forge')
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine 'cmd', '/c', 'gradlew.bat', '--no-daemon', 'build'
+    } else {
+        commandLine './gradlew', '--no-daemon', 'build'
+    }
+    def resolvedJavaHome = providers.gradleProperty('java_17_home').orElse(providers.environmentVariable('JAVA17_HOME')).orElse(providers.environmentVariable('JAVA_HOME')).orNull
+    if (resolvedJavaHome != null && !resolvedJavaHome.toString().trim().isEmpty()) {
+        environment 'JAVA_HOME', resolvedJavaHome
+        if (!System.getProperty('os.name').toLowerCase().contains('windows')) {
+            environment 'PATH', "${resolvedJavaHome}/bin:${System.getenv('PATH')}"
+        }
+    }
+}
+
+tasks.register('publish_v1_20_1_fabric_modrinth', Exec) {
+    dependsOn 'build_v1_20_1_fabric'
+    workingDir file('publish-provider')
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine 'cmd', '/c', '..\\gradlew.bat', "--no-daemon", "publishToModrinth", "-PartifactPath=../versions/v1_20_1/fabric/build/libs/${providers.gradleProperty('mod_id').get()}-fabric-1.20.1-${providers.gradleProperty('mod_version').get()}.jar", "-PgameVersions=1.20,1.20.1,1.20.2,1.20.3,1.20.4,1.20.5,1.20.6", "-PloaderId=fabric", "-PpublishDisplayName=${providers.gradleProperty('mod_name').get()} ${providers.gradleProperty('mod_version').get()} (1.20.x Fabric)", "-PpublishProjectVersion=${providers.gradleProperty('mod_version').get()}-1.20.x-fabric", "-PpublishJavaVersion=21", "-PpublishReleaseType=${providers.gradleProperty('publish_release_type').orElse('release').get()}", "-PpublishChangelog=${providers.gradleProperty('publish_changelog').orElse('').get()}"
+    } else {
+        commandLine '../gradlew', "--no-daemon", "publishToModrinth", "-PartifactPath=../versions/v1_20_1/fabric/build/libs/${providers.gradleProperty('mod_id').get()}-fabric-1.20.1-${providers.gradleProperty('mod_version').get()}.jar", "-PgameVersions=1.20,1.20.1,1.20.2,1.20.3,1.20.4,1.20.5,1.20.6", "-PloaderId=fabric", "-PpublishDisplayName=${providers.gradleProperty('mod_name').get()} ${providers.gradleProperty('mod_version').get()} (1.20.x Fabric)", "-PpublishProjectVersion=${providers.gradleProperty('mod_version').get()}-1.20.x-fabric", "-PpublishJavaVersion=21", "-PpublishReleaseType=${providers.gradleProperty('publish_release_type').orElse('release').get()}", "-PpublishChangelog=${providers.gradleProperty('publish_changelog').orElse('').get()}"
+    }
+    def resolvedJavaHome = providers.gradleProperty('java_21_home').orElse(providers.environmentVariable('JAVA21_HOME')).orElse(providers.environmentVariable('JAVA_HOME')).orNull
+    if (resolvedJavaHome != null && !resolvedJavaHome.toString().trim().isEmpty()) {
+        environment 'JAVA_HOME', resolvedJavaHome
+        if (!System.getProperty('os.name').toLowerCase().contains('windows')) {
+            environment 'PATH', "${resolvedJavaHome}/bin:${System.getenv('PATH')}"
+        }
+    }
+}
+
+tasks.register('publish_v1_20_1_fabric_curseforge', Exec) {
+    dependsOn 'build_v1_20_1_fabric'
+    workingDir file('publish-provider')
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine 'cmd', '/c', '..\\gradlew.bat', "--no-daemon", "publishToCurseforge", "-PartifactPath=../versions/v1_20_1/fabric/build/libs/${providers.gradleProperty('mod_id').get()}-fabric-1.20.1-${providers.gradleProperty('mod_version').get()}.jar", "-PgameVersions=1.20,1.20.1,1.20.2,1.20.3,1.20.4,1.20.5,1.20.6", "-PloaderId=fabric", "-PpublishDisplayName=${providers.gradleProperty('mod_name').get()} ${providers.gradleProperty('mod_version').get()} (1.20.x Fabric)", "-PpublishProjectVersion=${providers.gradleProperty('mod_version').get()}-1.20.x-fabric", "-PpublishJavaVersion=21", "-PpublishReleaseType=${providers.gradleProperty('publish_release_type').orElse('release').get()}", "-PpublishChangelog=${providers.gradleProperty('publish_changelog').orElse('').get()}"
+    } else {
+        commandLine '../gradlew', "--no-daemon", "publishToCurseforge", "-PartifactPath=../versions/v1_20_1/fabric/build/libs/${providers.gradleProperty('mod_id').get()}-fabric-1.20.1-${providers.gradleProperty('mod_version').get()}.jar", "-PgameVersions=1.20,1.20.1,1.20.2,1.20.3,1.20.4,1.20.5,1.20.6", "-PloaderId=fabric", "-PpublishDisplayName=${providers.gradleProperty('mod_name').get()} ${providers.gradleProperty('mod_version').get()} (1.20.x Fabric)", "-PpublishProjectVersion=${providers.gradleProperty('mod_version').get()}-1.20.x-fabric", "-PpublishJavaVersion=21", "-PpublishReleaseType=${providers.gradleProperty('publish_release_type').orElse('release').get()}", "-PpublishChangelog=${providers.gradleProperty('publish_changelog').orElse('').get()}"
+    }
+    def resolvedJavaHome = providers.gradleProperty('java_21_home').orElse(providers.environmentVariable('JAVA21_HOME')).orElse(providers.environmentVariable('JAVA_HOME')).orNull
+    if (resolvedJavaHome != null && !resolvedJavaHome.toString().trim().isEmpty()) {
+        environment 'JAVA_HOME', resolvedJavaHome
+        if (!System.getProperty('os.name').toLowerCase().contains('windows')) {
+            environment 'PATH', "${resolvedJavaHome}/bin:${System.getenv('PATH')}"
+        }
+    }
+}
+
+tasks.register('publish_v1_20_1_fabric_everywhere', Exec) {
+    dependsOn 'build_v1_20_1_fabric'
+    workingDir file('publish-provider')
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine 'cmd', '/c', '..\\gradlew.bat', "--no-daemon", "publishEverywhere", "-PartifactPath=../versions/v1_20_1/fabric/build/libs/${providers.gradleProperty('mod_id').get()}-fabric-1.20.1-${providers.gradleProperty('mod_version').get()}.jar", "-PgameVersions=1.20,1.20.1,1.20.2,1.20.3,1.20.4,1.20.5,1.20.6", "-PloaderId=fabric", "-PpublishDisplayName=${providers.gradleProperty('mod_name').get()} ${providers.gradleProperty('mod_version').get()} (1.20.x Fabric)", "-PpublishProjectVersion=${providers.gradleProperty('mod_version').get()}-1.20.x-fabric", "-PpublishJavaVersion=21", "-PpublishReleaseType=${providers.gradleProperty('publish_release_type').orElse('release').get()}", "-PpublishChangelog=${providers.gradleProperty('publish_changelog').orElse('').get()}"
+    } else {
+        commandLine '../gradlew', "--no-daemon", "publishEverywhere", "-PartifactPath=../versions/v1_20_1/fabric/build/libs/${providers.gradleProperty('mod_id').get()}-fabric-1.20.1-${providers.gradleProperty('mod_version').get()}.jar", "-PgameVersions=1.20,1.20.1,1.20.2,1.20.3,1.20.4,1.20.5,1.20.6", "-PloaderId=fabric", "-PpublishDisplayName=${providers.gradleProperty('mod_name').get()} ${providers.gradleProperty('mod_version').get()} (1.20.x Fabric)", "-PpublishProjectVersion=${providers.gradleProperty('mod_version').get()}-1.20.x-fabric", "-PpublishJavaVersion=21", "-PpublishReleaseType=${providers.gradleProperty('publish_release_type').orElse('release').get()}", "-PpublishChangelog=${providers.gradleProperty('publish_changelog').orElse('').get()}"
+    }
+    def resolvedJavaHome = providers.gradleProperty('java_21_home').orElse(providers.environmentVariable('JAVA21_HOME')).orElse(providers.environmentVariable('JAVA_HOME')).orNull
+    if (resolvedJavaHome != null && !resolvedJavaHome.toString().trim().isEmpty()) {
+        environment 'JAVA_HOME', resolvedJavaHome
+        if (!System.getProperty('os.name').toLowerCase().contains('windows')) {
+            environment 'PATH', "${resolvedJavaHome}/bin:${System.getenv('PATH')}"
+        }
+    }
+}
+
+tasks.register('publish_v1_20_1_forge_modrinth', Exec) {
+    dependsOn 'build_v1_20_1_forge'
+    workingDir file('publish-provider')
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine 'cmd', '/c', '..\\gradlew.bat', "--no-daemon", "publishToModrinth", "-PartifactPath=../versions/v1_20_1/forge/build/libs/${providers.gradleProperty('mod_id').get()}-forge-1.20.1-${providers.gradleProperty('mod_version').get()}.jar", "-PgameVersions=1.20,1.20.1,1.20.2,1.20.3,1.20.4,1.20.5,1.20.6", "-PloaderId=forge", "-PpublishDisplayName=${providers.gradleProperty('mod_name').get()} ${providers.gradleProperty('mod_version').get()} (1.20.x Forge)", "-PpublishProjectVersion=${providers.gradleProperty('mod_version').get()}-1.20.x-forge", "-PpublishJavaVersion=17", "-PpublishReleaseType=${providers.gradleProperty('publish_release_type').orElse('release').get()}", "-PpublishChangelog=${providers.gradleProperty('publish_changelog').orElse('').get()}"
+    } else {
+        commandLine '../gradlew', "--no-daemon", "publishToModrinth", "-PartifactPath=../versions/v1_20_1/forge/build/libs/${providers.gradleProperty('mod_id').get()}-forge-1.20.1-${providers.gradleProperty('mod_version').get()}.jar", "-PgameVersions=1.20,1.20.1,1.20.2,1.20.3,1.20.4,1.20.5,1.20.6", "-PloaderId=forge", "-PpublishDisplayName=${providers.gradleProperty('mod_name').get()} ${providers.gradleProperty('mod_version').get()} (1.20.x Forge)", "-PpublishProjectVersion=${providers.gradleProperty('mod_version').get()}-1.20.x-forge", "-PpublishJavaVersion=17", "-PpublishReleaseType=${providers.gradleProperty('publish_release_type').orElse('release').get()}", "-PpublishChangelog=${providers.gradleProperty('publish_changelog').orElse('').get()}"
+    }
+    def resolvedJavaHome = providers.gradleProperty('java_17_home').orElse(providers.environmentVariable('JAVA17_HOME')).orElse(providers.environmentVariable('JAVA_HOME')).orNull
+    if (resolvedJavaHome != null && !resolvedJavaHome.toString().trim().isEmpty()) {
+        environment 'JAVA_HOME', resolvedJavaHome
+        if (!System.getProperty('os.name').toLowerCase().contains('windows')) {
+            environment 'PATH', "${resolvedJavaHome}/bin:${System.getenv('PATH')}"
+        }
+    }
+}
+
+tasks.register('publish_v1_20_1_forge_curseforge', Exec) {
+    dependsOn 'build_v1_20_1_forge'
+    workingDir file('publish-provider')
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine 'cmd', '/c', '..\\gradlew.bat', "--no-daemon", "publishToCurseforge", "-PartifactPath=../versions/v1_20_1/forge/build/libs/${providers.gradleProperty('mod_id').get()}-forge-1.20.1-${providers.gradleProperty('mod_version').get()}.jar", "-PgameVersions=1.20,1.20.1,1.20.2,1.20.3,1.20.4,1.20.5,1.20.6", "-PloaderId=forge", "-PpublishDisplayName=${providers.gradleProperty('mod_name').get()} ${providers.gradleProperty('mod_version').get()} (1.20.x Forge)", "-PpublishProjectVersion=${providers.gradleProperty('mod_version').get()}-1.20.x-forge", "-PpublishJavaVersion=17", "-PpublishReleaseType=${providers.gradleProperty('publish_release_type').orElse('release').get()}", "-PpublishChangelog=${providers.gradleProperty('publish_changelog').orElse('').get()}"
+    } else {
+        commandLine '../gradlew', "--no-daemon", "publishToCurseforge", "-PartifactPath=../versions/v1_20_1/forge/build/libs/${providers.gradleProperty('mod_id').get()}-forge-1.20.1-${providers.gradleProperty('mod_version').get()}.jar", "-PgameVersions=1.20,1.20.1,1.20.2,1.20.3,1.20.4,1.20.5,1.20.6", "-PloaderId=forge", "-PpublishDisplayName=${providers.gradleProperty('mod_name').get()} ${providers.gradleProperty('mod_version').get()} (1.20.x Forge)", "-PpublishProjectVersion=${providers.gradleProperty('mod_version').get()}-1.20.x-forge", "-PpublishJavaVersion=17", "-PpublishReleaseType=${providers.gradleProperty('publish_release_type').orElse('release').get()}", "-PpublishChangelog=${providers.gradleProperty('publish_changelog').orElse('').get()}"
+    }
+    def resolvedJavaHome = providers.gradleProperty('java_17_home').orElse(providers.environmentVariable('JAVA17_HOME')).orElse(providers.environmentVariable('JAVA_HOME')).orNull
+    if (resolvedJavaHome != null && !resolvedJavaHome.toString().trim().isEmpty()) {
+        environment 'JAVA_HOME', resolvedJavaHome
+        if (!System.getProperty('os.name').toLowerCase().contains('windows')) {
+            environment 'PATH', "${resolvedJavaHome}/bin:${System.getenv('PATH')}"
+        }
+    }
+}
+
+tasks.register('publish_v1_20_1_forge_everywhere', Exec) {
+    dependsOn 'build_v1_20_1_forge'
+    workingDir file('publish-provider')
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine 'cmd', '/c', '..\\gradlew.bat', "--no-daemon", "publishEverywhere", "-PartifactPath=../versions/v1_20_1/forge/build/libs/${providers.gradleProperty('mod_id').get()}-forge-1.20.1-${providers.gradleProperty('mod_version').get()}.jar", "-PgameVersions=1.20,1.20.1,1.20.2,1.20.3,1.20.4,1.20.5,1.20.6", "-PloaderId=forge", "-PpublishDisplayName=${providers.gradleProperty('mod_name').get()} ${providers.gradleProperty('mod_version').get()} (1.20.x Forge)", "-PpublishProjectVersion=${providers.gradleProperty('mod_version').get()}-1.20.x-forge", "-PpublishJavaVersion=17", "-PpublishReleaseType=${providers.gradleProperty('publish_release_type').orElse('release').get()}", "-PpublishChangelog=${providers.gradleProperty('publish_changelog').orElse('').get()}"
+    } else {
+        commandLine '../gradlew', "--no-daemon", "publishEverywhere", "-PartifactPath=../versions/v1_20_1/forge/build/libs/${providers.gradleProperty('mod_id').get()}-forge-1.20.1-${providers.gradleProperty('mod_version').get()}.jar", "-PgameVersions=1.20,1.20.1,1.20.2,1.20.3,1.20.4,1.20.5,1.20.6", "-PloaderId=forge", "-PpublishDisplayName=${providers.gradleProperty('mod_name').get()} ${providers.gradleProperty('mod_version').get()} (1.20.x Forge)", "-PpublishProjectVersion=${providers.gradleProperty('mod_version').get()}-1.20.x-forge", "-PpublishJavaVersion=17", "-PpublishReleaseType=${providers.gradleProperty('publish_release_type').orElse('release').get()}", "-PpublishChangelog=${providers.gradleProperty('publish_changelog').orElse('').get()}"
+    }
+    def resolvedJavaHome = providers.gradleProperty('java_17_home').orElse(providers.environmentVariable('JAVA17_HOME')).orElse(providers.environmentVariable('JAVA_HOME')).orNull
+    if (resolvedJavaHome != null && !resolvedJavaHome.toString().trim().isEmpty()) {
+        environment 'JAVA_HOME', resolvedJavaHome
+        if (!System.getProperty('os.name').toLowerCase().contains('windows')) {
+            environment 'PATH', "${resolvedJavaHome}/bin:${System.getenv('PATH')}"
+        }
+    }
+}
+
+tasks.register('buildAll') {
+    dependsOn 'build_v1_20_1_fabric', 'build_v1_20_1_forge'
+}
+
+tasks.named('build') {
+    dependsOn 'buildAll'
+}
+
+tasks.register('publishAllToModrinth') {
+    dependsOn 'publish_v1_20_1_fabric_modrinth', 'publish_v1_20_1_forge_modrinth'
+}
+
+tasks.register('publishAllToCurseforge') {
+    dependsOn 'publish_v1_20_1_fabric_curseforge', 'publish_v1_20_1_forge_curseforge'
+}
+
+tasks.register('publishAllEverywhere') {
+    dependsOn 'publish_v1_20_1_fabric_everywhere', 'publish_v1_20_1_forge_everywhere'
+}

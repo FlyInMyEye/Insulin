@@ -1,0 +1,14 @@
+.gradle/
+build/
+out/
+run/
+run-data/
+versions/*/*/.gradle/
+versions/*/*/build/
+versions/*/*/out/
+versions/*/*/run/
+versions/*/*/run-data/
+.idea/
+*.iml
+.rmodcreator/
+.rmodcreator.log

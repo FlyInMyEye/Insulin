@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.fly.insulin.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "insulin.refmap.json",
+  "mixins": [
+    "server.MixinChunkMap"
+  ],
+  "client": [
+    "client.MixinClientChunkCache",
+    "renderer.MixinRenderSection",
+    "renderer.MixinRenderSectionManager",
+    "renderer.MixinOcclusionCuller",
+    "renderer.MixinVisibleChunkCollector",
+    "renderer.MixinChunkBuilderMeshingTask"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
